@@ -2,27 +2,51 @@
   "name": "hero-brawl",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "",
+  "babel": {
+    "presets": [
+      "@babel/preset-env",
+      "@babel/preset-react"
+    ]
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack -d",
+    "build": "webpack --config webpack.config.js",
+    "react-dev": "webpack -d --watch",
     "server-dev": "nodemon server/index.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ckallemeyn/hero-brawl.git"
+  },
   "keywords": [],
-  "author": "",
+  "author": "ckallemeyn",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ckallemeyn/hero-brawl/issues"
+  },
+  "homepage": "https://github.com/ckallemeyn/hero-brawl#readme",
   "dependencies": {
     "axios": "^0.18.0",
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
+    "mysql": "^2.16.0",
+    "prop-types": "^15.6.2",
     "react": "^16.7.0",
-    "react-dom": "^16.7.0",
-    "webpack": "^4.29.0"
+    "react-dom": "^16.7.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.2.2",
     "@babel/preset-env": "^7.3.1",
-    "@babel/preset-react": "^7.0.0"
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.5",
+    "css-loader": "^2.1.0",
+    "html-webpack-plugin": "^3.2.0",
+    "nodemon": "^1.18.9",
+    "style-loader": "^0.23.1",
+    "webpack": "^4.29.0",
+    "webpack-cli": "^3.2.1",
+    "webpack-dev-server": "^3.1.14"
   }
 }
