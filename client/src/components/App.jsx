@@ -28,7 +28,6 @@ grabHeroData(e) {
   axios.post('http://localhost:4000/hero', { query })
     .then((response) => {
       console.log('Retrieved hero data', response);
-      // const hero = [].concat(response.data);
       app.setState({
         heroList: heroList.concat(response.data)
       });
