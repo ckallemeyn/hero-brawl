@@ -15,7 +15,8 @@ app.use(bodyParser.json());
 
 app.listen(port, () => { console.log(`app is listening on port ${port}`) });
 
-app.get('/hero', (req, res) => {
+app.get('/hero/:name', (req, res) => {
+  
   getHeroes(heroName='Yoda', function(error, response, body) {
     if (error) {
       console.error('error in getHeroes func in server', error);
@@ -25,6 +26,21 @@ app.get('/hero', (req, res) => {
       console.log(heroData)
       res.json(heroData);
       res.end();
+    }
+  });
+});
+app.post('/hero', (req, res) => {
+  let { query } = req.body;
+  console.log('found the body', req.body);
+  getHeroes(query, function(error, response, body) {
+    if (error) {
+      console.error('error in getHeroes func in server', error);
+      res.sendStatus(404)
+    } else {
+      let heroInfo = JSON.parse(body);
+      let heroData = heroInfo.results[0];
+      console.log(heroData)
+      res.status(201).json(heroData);
     }
   });
 });

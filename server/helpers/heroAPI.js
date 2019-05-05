@@ -2,9 +2,9 @@ const axios = require('axios');
 const request = require('request');
 const TOKEN = require('../../config.js').API_TOKEN;
 
-const getHeroes = (heroName, callback) => {
+const getHeroes = (heroName, next) => {
   let options = {
-    url: `https://superheroapi.com/api/${TOKEN}/search/Yoda`,
+    url: `https://superheroapi.com/api/${TOKEN}/search/${heroName}`,
     headers: {
       'User-Agent': 'request',
     },
@@ -14,7 +14,7 @@ const getHeroes = (heroName, callback) => {
       rejectUnauthorized: false
     }
   };
-  request(options, callback)
+  request(options, next)
 };
 
 module.exports = { getHeroes }
