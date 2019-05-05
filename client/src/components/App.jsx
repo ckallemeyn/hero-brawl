@@ -5,17 +5,18 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      username: '',
       query: '',
       heroList: [],
       removeHero: false,
     }
-    this.fetchHero = this.fetchHero.bind(this);
+    this.fetchData = this.fetchData.bind(this);
     this.grabHeroData = this.grabHeroData.bind(this);
   }
 
-fetchHero(e) {
+fetchData(e) {
   e.preventDefault();
-  const {name, value} = e.target;
+  const { name, value } = e.target;
   this.setState({
     [name]: value
   });
@@ -23,9 +24,10 @@ fetchHero(e) {
 
 grabHeroData(e) {
   e.preventDefault();
-  const { query, heroList } = this.state;
+  const { username, query, heroList } = this.state;
   let app = this;
-  axios.post('http://localhost:4000/hero', { query })
+  console.log('here is the username', username)
+  axios.post('http://localhost:4000/hero', { query, username })
     .then((response) => {
       console.log('Retrieved hero data', response);
       app.setState({
@@ -39,7 +41,7 @@ grabHeroData(e) {
 
 
 componentDidMount() {
-
+// add initial GET request for Hero data from database
 }
 
   render() {
@@ -48,10 +50,15 @@ componentDidMount() {
       <div>
         <h1>Hero Brawl</h1>
         <br/>
-        <form action="" onSubmit={this.grabHeroData}>
+        <form onSubmit={this.grabHeroData}>
           <label>
-            Find a Hero!
-            <input type="text" name="query" onChange={this.fetchHero}/>
+            Username:
+            <input type="text" name="username" onChange={this.fetchData}/>
+          </label>
+          <br/>
+          <label>
+            Search:
+            <input type="text" name="query" placeholder="find a superhero" onChange={this.fetchData}/>
           </label>
           <input type="submit" value="submit"/>
         </form>

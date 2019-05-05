@@ -4,10 +4,10 @@ const bodyParser = require('body-parser');
 const port = 4000;
 const request = require('request');
 const TOKEN = require('../config').API_TOKEN;
-const fs = require('fs')
-const path = require('path')
-let getHeroes = require('./helpers/heroAPI').getHeroes;
-// const getHeroes = require('./helpers/heroAPI').getHeroes;
+const fs = require('fs');
+const path = require('path');
+const { db } = require('../db/index.js')
+const { getHeroes } = require('./helpers/heroAPI');
 
 app.use(express.static('public/dist'));
 app.use(bodyParser.urlencoded({extended: false}));
@@ -15,8 +15,9 @@ app.use(bodyParser.json());
 
 app.listen(port, () => { console.log(`app is listening on port ${port}`) });
 
+
 app.get('/hero/:name', (req, res) => {
-  
+
   getHeroes(heroName='Yoda', function(error, response, body) {
     if (error) {
       console.error('error in getHeroes func in server', error);
@@ -30,16 +31,18 @@ app.get('/hero/:name', (req, res) => {
   });
 });
 app.post('/hero', (req, res) => {
-  let { query } = req.body;
+  let { query, username } = req.body;
   console.log('found the body', req.body);
   getHeroes(query, function(error, response, body) {
     if (error) {
       console.error('error in getHeroes func in server', error);
-      res.sendStatus(404)
+      res.status(404).send(error);
     } else {
       let heroInfo = JSON.parse(body);
       let heroData = heroInfo.results[0];
       console.log(heroData)
+      // need to add Database Insert query here
+
       res.status(201).json(heroData);
     }
   });
