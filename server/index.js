@@ -17,33 +17,35 @@ app.listen(port, () => { console.log(`app is listening on port ${port}`) });
 
 
 app.get('/hero/:name', (req, res) => {
-
-  getHeroes(heroName='Yoda', function(error, response, body) {
-    if (error) {
-      console.error('error in getHeroes func in server', error);
-    } else {
-      let heroInfo = JSON.parse(body);
-      let heroData = heroInfo.results[0];
-      console.log(heroData)
-      res.json(heroData);
-      res.end();
-    }
-  });
+  const { name } = req.params;
+  
 });
+
+// Refactor Later to shorten code
 app.post('/hero', (req, res) => {
-  let { query, username } = req.body;
+  const { query, username } = req.body;
   console.log('found the body', req.body);
   getHeroes(query, function(error, response, body) {
     if (error) {
       console.error('error in getHeroes func in server', error);
       res.status(404).send(error);
     } else {
-      let heroInfo = JSON.parse(body);
-      let heroData = heroInfo.results[0];
-      console.log(heroData)
-      // need to add Database Insert query here
-
-      res.status(201).json(heroData);
+      let data = JSON.parse(body);
+      const [{ name, powerstats, image: { url } }] = data.results;
+      const stats = Object.values(powerstats);
+      const params = [ name, ...stats, url, username ];
+      // This can be refactored in a database file and imported in:
+      let qs = `INSERT INTO heroes(name, intelligence, strength, speed, durability, power, combat, image, user_id) VALUES (?,?,?,?,?,?,?,?,(SELECT id FROM users WHERE username=?))`;
+      db.query(qs, params, (error, results, fields) => {
+        if (error) {
+          console.error('unable to insert data: ', error);
+          res.status(404).send(error);
+        }
+        if (results !== undefined) {
+          console.log('SUCCESS!', results);
+          res.sendStatus(201);
+        }
+      });
     }
   });
 });
