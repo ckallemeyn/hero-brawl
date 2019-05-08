@@ -30,18 +30,29 @@ grabHeroData(e) {
   axios.post('http://localhost:4000/hero', { query, username })
     .then((response) => {
       console.log('Retrieved hero data', response);
-      app.setState({
-        heroList: heroList.concat(response.data)
-      });
+      // app.setState({
+      //   heroList: heroList.concat(response.data)
+      // });
     })
     .catch((error) => {
       console.error('unabale to post data', error);
     });
 }
 
-
+// initial get request with username
 componentDidMount() {
-// add initial GET request for Hero data from database
+  let username = 'ckallemeyn';
+  let app = this;
+  axios.get(`http://localhost:4000/hero/${username}`)
+    .then(({ data }) => {
+      console.log('SUCCESS received data on client', data);
+      app.setState({
+        heroList: data
+      });
+    })
+    .catch((error) => {
+      console.error('unable to read data from db onload', error);
+    })
 }
 
   render() {
@@ -63,7 +74,7 @@ componentDidMount() {
           <input type="submit" value="submit"/>
         </form>
         <ul className="heroList">
-          {(heroList.length > 0) ? heroList.map((hero, idx)=> {
+          {(heroList.length > 0) ? heroList.map((hero, idx) => {
             return <li key={idx}>{hero.name}</li>
           }) : null}
         </ul>

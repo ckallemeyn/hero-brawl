@@ -15,16 +15,24 @@ app.use(bodyParser.json());
 
 app.listen(port, () => { console.log(`app is listening on port ${port}`) });
 
-
-app.get('/hero/:name', (req, res) => {
-  const { name } = req.params;
-  
+app.get('/hero/:username', (req, res) => {
+  const { username } = req.params;
+  const qs =`SELECT name, intelligence, strength, speed, durability, power, combat, image FROM heroes, users WHERE username = ?`;
+  db.query(qs, username, (error, results, fields) => {
+    if (error){
+      console.error('Could not retrieve data from db', error);
+      res.status(404).send(error);
+    }
+    if (results) {
+      console.log('SUCCESS You retrieved the data', results);
+      res.status(200).json(results);
+    }
+  });
 });
 
 // Refactor Later to shorten code
 app.post('/hero', (req, res) => {
   const { query, username } = req.body;
-  console.log('found the body', req.body);
   getHeroes(query, function(error, response, body) {
     if (error) {
       console.error('error in getHeroes func in server', error);
