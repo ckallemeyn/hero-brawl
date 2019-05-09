@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import HeroTable from './HeroTable.jsx';
 
 class App extends Component {
   constructor(props) {
@@ -30,9 +31,7 @@ grabHeroData(e) {
   axios.post('http://localhost:4000/hero', { query, username })
     .then((response) => {
       console.log('Retrieved hero data', response);
-      // app.setState({
-      //   heroList: heroList.concat(response.data)
-      // });
+      // need to do something with the username here...
     })
     .catch((error) => {
       console.error('unabale to post data', error);
@@ -52,7 +51,7 @@ componentDidMount() {
     })
     .catch((error) => {
       console.error('unable to read data from db onload', error);
-    })
+    });
 }
 
   render() {
@@ -73,11 +72,9 @@ componentDidMount() {
           </label>
           <input type="submit" value="submit"/>
         </form>
-        <ul className="heroList">
-          {(heroList.length > 0) ? heroList.map((hero, idx) => {
-            return <li key={idx}>{hero.name}</li>
-          }) : null}
-        </ul>
+        <div>
+          <HeroTable data={heroList} />
+        </div>
       </div>
     )
   }

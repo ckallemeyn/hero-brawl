@@ -1,7 +1,7 @@
 {
   "name": "hero-brawl",
   "version": "1.0.0",
-  "description": "",
+  "description": "A place to battle heroes and find out if your hero line-up is the G.O.A.T",
   "main": "",
   "babel": {
     "presets": [
@@ -27,6 +27,8 @@
   },
   "homepage": "https://github.com/ckallemeyn/hero-brawl#readme",
   "dependencies": {
+    "@material-ui/core": "^3.9.3",
+    "@material-ui/icons": "^3.0.2",
     "axios": "^0.18.0",
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
