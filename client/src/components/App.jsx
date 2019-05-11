@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import HeroTable from './HeroTable.jsx';
+import NavBar from './NavBar.jsx';
+import LoginForm from './LoginForm.jsx';
 
 class App extends Component {
   constructor(props) {
@@ -58,8 +60,9 @@ componentDidMount() {
     const { query, heroList } = this.state;
     return (
       <div>
-        <h1>Hero Brawl</h1>
+        <NavBar />
         <br/>
+        <LoginForm />
         <form onSubmit={this.grabHeroData}>
           <label>
             Username:
