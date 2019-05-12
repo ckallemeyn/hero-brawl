@@ -12,17 +12,21 @@ import Paper from '@material-ui/core/Paper';
 
 const styles = theme => ({
   root: {
+    height: '30em',
     display: 'flex',
     flexWrap: 'wrap',
   },
   paper: {
-    width: '100%',
+    width: '20em',
     marginTop: theme.spacing.unit * 3,
+    marginLeft: theme.spacing.unit * 3,
     overflowX: 'auto',
-    marginBottom: theme.spacing.unit
+    marginBottom: theme.spacing.unit * 3
   },
   margin: {
-    margin: theme.spacing.unit,
+    width:'92%',
+    marginTop: theme.spacing.unit * 3,
+    marginLeft: '12px',
   },
 });
 
@@ -38,7 +42,7 @@ function LoginForm(props) {
 
   return (
     <div className={classes.root}>
-    <Paper>
+    <Paper className={classes.paper}>
       <FormControl className={classes.margin}>
         <MuiThemeProvider theme={theme}>
           <TextField
