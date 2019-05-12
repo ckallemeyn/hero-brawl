@@ -10,6 +10,7 @@ import { withStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import Button from '@material-ui/core/Button';
+import { Link } from 'react-router-dom';
 
 const styles = theme => ({
   root: {
@@ -97,9 +98,9 @@ function NavBar(props) {
               }}
             />
           </div>
-          <Button color='inherit'>Login</Button>
-          <Button color='inherit'>Your List</Button>
-          <Button color='inherit'>Battle!</Button>
+          <Button component={Link} to="/" color='inherit'> Login </Button>
+          <Button component={Link} to="/lineup" color='inherit'> Your List </Button>
+          <Button component={Link} to="/battle" color='inherit'> Battle! </Button>
         </Toolbar>
       </AppBar>
     </div>

@@ -3,6 +3,7 @@ import axios from 'axios';
 import HeroTable from './HeroTable.jsx';
 import NavBar from './NavBar.jsx';
 import LoginForm from './LoginForm.jsx';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 class App extends Component {
   constructor(props) {
@@ -59,26 +60,31 @@ componentDidMount() {
   render() {
     const { query, heroList } = this.state;
     return (
-      <div>
-        <NavBar />
-        <br/>
-        <LoginForm />
-        <form onSubmit={this.grabHeroData}>
-          <label>
-            Username:
-            <input type="text" name="username" onChange={this.fetchData}/>
-          </label>
-          <br/>
-          <label>
-            Search:
-            <input type="text" name="query" placeholder="find a superhero" onChange={this.fetchData}/>
-          </label>
-          <input type="submit" value="submit"/>
-        </form>
+      <Router>
         <div>
-          <HeroTable data={heroList} />
+          <NavBar />
+          <br/>
+          {/* <LoginForm />
+          <form onSubmit={this.grabHeroData}>
+            <label>
+              Username:
+              <input type="text" name="username" onChange={this.fetchData}/>
+            </label>
+            <br/>
+            <label>
+              Search:
+              <input type="text" name="query" placeholder="find a superhero" onChange={this.fetchData}/>
+            </label>
+            <input type="submit" value="submit"/>
+          </form> */}
+           {/* <div>
+            <HeroTable data={heroList} />
+          </div> */}
+          <Route exact path="/" component={LoginForm} />
+          <Route path="/lineup" render={() => <HeroTable  data={heroList}/>} />
+          {/* <Route path="/battle" component={null} /> */}
         </div>
-      </div>
+      </Router>
     )
   }
 }
