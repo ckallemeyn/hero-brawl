@@ -4,6 +4,7 @@ import HeroTable from './HeroTable.jsx';
 import NavBar from './NavBar.jsx';
 import LoginForm from './LoginForm.jsx';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import Battle from './Battle.jsx';
 
 class App extends Component {
   constructor(props) {
@@ -77,12 +78,12 @@ componentDidMount() {
             </label>
             <input type="submit" value="submit"/>
           </form> */}
-           {/* <div>
+          {/* <div>
             <HeroTable data={heroList} />
           </div> */}
           <Route exact path="/" component={LoginForm} />
           <Route path="/lineup" render={() => <HeroTable  data={heroList}/>} />
-          {/* <Route path="/battle" component={null} /> */}
+          <Route path="/battle" component={Battle} />
         </div>
       </Router>
     )
