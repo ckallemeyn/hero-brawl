@@ -20,7 +20,14 @@ app.get('/stats/:hero', (req, res) => {
   const { hero } = req.params;
   const heroId = nameToId(hero);
   // make api call with id
-
+  getHeroes(heroId, (error, response, body) => {
+    if (error) {
+      console.error('Unable to get hero', error);
+      res.status(404).send(error);
+    }
+    let data = JSON.parse(body);
+    res.status(200).json(data);
+  });
 });
 
 app.get('/hero/:username', (req, res) => {
@@ -41,7 +48,8 @@ app.get('/hero/:username', (req, res) => {
 // Refactor Later to shorten code
 app.post('/hero', (req, res) => {
   const { query, username } = req.body;
-  getHeroes(query, function(error, response, body) {
+  const heroId = nameToId(query);
+  getHeroes(heroId, function(error, response, body) {
     if (error) {
       console.error('error in getHeroes func in server', error);
       res.status(404).send(error);
