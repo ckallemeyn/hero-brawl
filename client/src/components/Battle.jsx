@@ -1,8 +1,11 @@
-import React, { Component } from 'react'
-import Paper from '@material-ui/core/Paper'
-import Input from '@material-ui/core/Input'
-import TextField from '@material-ui/core/TextField'
-import { withStyles } from '@material-ui/core/styles'
+import React, { Component } from 'react';
+import Paper from '@material-ui/core/Paper';
+import Input from '@material-ui/core/Input';
+import TextField from '@material-ui/core/TextField';
+import { withStyles } from '@material-ui/core/styles';
+import FormControl from '@material-ui/core/FormControl';
+import Button from '@material-ui/core/Button';
+import SearchIcon from '@material-ui/icons/Search';
 
 const styles = (theme) => ({
   root: {
@@ -34,22 +37,29 @@ class Battle extends Component {
 
   // Func to randomize that powerstat to make the fight more random and less predictable
 
+
+  // ***** CHANGE ONSUBMIT Func *****
   render() {
     const { heroSearch } = this.state;
     const { classes, fetchData } = this.props;
     return (
       <div>
         <Paper className={classes.root}>
-          <TextField
-            id="outlined-with-placeholder"
-            name='battleSearch'
-            label="Find Heroes"
-            placeholder="find a hero"
-            className={classes.textField}
-            margin="normal"
-            variant="outlined"
-            onChange={fetchData}
-          />
+          <FormControl onSubmit={null}>
+            <TextField
+              id="outlined-with-placeholder"
+              name='battleSearch'
+              label="Find Heroes"
+              placeholder="find a hero"
+              className={classes.textField}
+              margin="normal"
+              variant="outlined"
+              onChange={fetchData}
+            />
+            <Button type="submit">
+              <SearchIcon />
+            </Button>
+          </FormControl>
         </Paper>
       </div>
     )
