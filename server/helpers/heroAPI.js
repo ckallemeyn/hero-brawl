@@ -1,10 +1,11 @@
 const axios = require('axios');
 const request = require('request');
-const TOKEN = require('../../config.js').API_TOKEN;
+const { API_TOKEN } = require('../../config.js');
 
-const getHeroes = (heroName, next) => {
+const getHeroes = (id, next) => {
+console.log('found the id in getHeros func', id)
   let options = {
-    url: `https://superheroapi.com/api/${TOKEN}/search/${heroName}`,
+    url: `https://superheroapi.com/api/${API_TOKEN}/${id}`,
     headers: {
       'User-Agent': 'request',
     },

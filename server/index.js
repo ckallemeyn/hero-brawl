@@ -7,13 +7,21 @@ const TOKEN = require('../config').API_TOKEN;
 const fs = require('fs');
 const path = require('path');
 const { db } = require('../db/index.js')
-const { getHeroes } = require('./helpers/heroAPI');
+const { getHeroes } = require('./helpers/heroAPI.js');
+const { nameToId } = require('./helpers/heroUtils.js');
 
 app.use(express.static('public/dist'));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
 app.listen(port, () => { console.log(`app is listening on port ${port}`) });
+
+app.get('/stats/:hero', (req, res) => {
+  const { hero } = req.params;
+  const heroId = nameToId(hero);
+  // make api call with id
+
+});
 
 app.get('/hero/:username', (req, res) => {
   const { username } = req.params;
@@ -56,6 +64,8 @@ app.post('/hero', (req, res) => {
       });
     }
   });
+
+
 });
 
 

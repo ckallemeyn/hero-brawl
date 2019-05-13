@@ -12,6 +12,8 @@ class App extends Component {
     this.state = {
       username: '',
       query: '',
+      battleSearch: '',
+      heroStats:[],
       heroList: [],
       removeHero: false,
     }
@@ -26,6 +28,8 @@ fetchData(e) {
     [name]: value
   });
 }
+
+// add a method to send a get request with the correct params to server. Then, using a function, reassign the name to a heroId to do a correct lookup.
 
 grabHeroData(e) {
   e.preventDefault();
@@ -82,8 +86,14 @@ componentDidMount() {
             <HeroTable data={heroList} />
           </div> */}
           <Route exact path="/" component={LoginForm} />
-          <Route path="/lineup" render={() => <HeroTable  data={heroList}/>} />
-          <Route path="/battle" component={Battle} />
+          <Route
+            path="/lineup"
+            render={() => <HeroTable  data={heroList}/>}
+          />
+          <Route
+            path="/battle"
+            render={() => <Battle fetchData={this.fetchData} />}
+          />
         </div>
       </Router>
     )

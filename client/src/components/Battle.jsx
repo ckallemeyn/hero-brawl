@@ -28,15 +28,6 @@ class Battle extends Component {
       Hero1: '',
       Hero2: ''
     }
-    this.inputChange = this.inputChange.bind(this);
-  }
-
-  inputChange(e) {
-    e.preventDefault();
-    const { name, value } = e.target;
-    this.setState({
-      [name]: value,
-    });
   }
 
   // Func to get average PowerStat score from each hero
@@ -45,20 +36,20 @@ class Battle extends Component {
 
   render() {
     const { heroSearch } = this.state;
-    const { classes } = this.props;
+    const { classes, fetchData } = this.props;
     return (
       <div>
         <Paper className={classes.root}>
           <TextField
-          id="outlined-with-placeholder"
-          name='heroSearch'
-          label="Find Heroes"
-          placeholder="find a hero"
-          className={classes.textField}
-          margin="normal"
-          variant="outlined"
-          onChange={this.inputChange}
-        />
+            id="outlined-with-placeholder"
+            name='battleSearch'
+            label="Find Heroes"
+            placeholder="find a hero"
+            className={classes.textField}
+            margin="normal"
+            variant="outlined"
+            onChange={fetchData}
+          />
         </Paper>
       </div>
     )
