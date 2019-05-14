@@ -13,12 +13,13 @@ class App extends Component {
       username: '',
       query: '',
       battleSearch: '',
-      heroStats:[],
+      battleList:[],
       heroList: [],
       removeHero: false,
     }
     this.fetchData = this.fetchData.bind(this);
     this.grabHeroData = this.grabHeroData.bind(this);
+    this.collectHero = this.collectHero.bind(this);
   }
 
 fetchData(e) {
@@ -30,6 +31,31 @@ fetchData(e) {
 }
 
 // add a method to send a get request with the correct params to server. Then, using a function, reassign the name to a heroId to do a correct lookup.
+collectHero(e) {
+  e.preventDefault();
+  const app = this;
+  const { battleSearch, battleList } = this.state;
+  if (battleSearch === '') {
+    alert('not a valid hero name please try again');
+    return;
+  }
+  if (battleList.length === 2) {
+    alert('Cannot add another hero to battle');
+    return;
+  }
+  axios.get(`http://localhost:4000/stats/${battleSearch}`)
+    .then((response) => {
+      const { data } = response;
+      this.setState({
+        battleSearch: '',
+        battleList: app.state.battleList.concat(data)
+      });
+    })
+    .catch((error) => {
+      console.error('unable to retrive data', error);
+    });
+}
+
 
 grabHeroData(e) {
   e.preventDefault();
@@ -39,6 +65,7 @@ grabHeroData(e) {
   axios.post('http://localhost:4000/hero', { query, username })
     .then((response) => {
       console.log('Retrieved hero data', response);
+
       // need to do something with the username here...
     })
     .catch((error) => {
@@ -63,7 +90,7 @@ componentDidMount() {
 }
 
   render() {
-    const { query, heroList } = this.state;
+    const { query, heroList, battleSearch } = this.state;
     return (
       <Router>
         <div>
@@ -92,7 +119,12 @@ componentDidMount() {
           />
           <Route
             path="/battle"
-            render={() => <Battle fetchData={this.fetchData} />}
+            render={() => (
+            <Battle
+              battleSearch={battleSearch}
+              collectHero={this.collectHero}
+              fetchData={this.fetchData}
+            />)}
           />
         </div>
       </Router>

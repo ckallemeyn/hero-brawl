@@ -5,20 +5,30 @@ import TextField from '@material-ui/core/TextField';
 import { withStyles } from '@material-ui/core/styles';
 import FormControl from '@material-ui/core/FormControl';
 import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
 
 const styles = (theme) => ({
   root: {
     margin: theme.spacing.unit,
-    height: '40em',
+    marginLeft: theme.spacing.unit * 6,
+    width: 400,
+    alignItems: 'center',
+    display: 'flex',
   },
   input: {
-    margin: theme.spacing.unit,
+    width: '20em',
+
   },
   textField: {
-    marginLeft: theme.spacing.unit,
+    marginLeft: theme.spacing.unit * 5,
     marginRight: theme.spacing.unit,
+    marginBottom: theme.spacing.unit,
   },
+  button: {
+    marginTop: theme.spacing.unit * 3,
+    padding: 10,
+  }
 });
 
 class Battle extends Component {
@@ -41,27 +51,28 @@ class Battle extends Component {
   // ***** CHANGE ONSUBMIT Func *****
   render() {
     const { heroSearch } = this.state;
-    const { classes, fetchData } = this.props;
+    const { classes, fetchData, collectHero, battleSearch } = this.props;
     return (
-      <div>
         <Paper className={classes.root}>
-          <FormControl onSubmit={null}>
             <TextField
               id="outlined-with-placeholder"
+              className={classes.textField}
               name='battleSearch'
               label="Find Heroes"
+              value={battleSearch}
               placeholder="find a hero"
-              className={classes.textField}
               margin="normal"
               variant="outlined"
               onChange={fetchData}
             />
-            <Button type="submit">
+            <IconButton
+              className={classes.button}
+              type="submit"
+              onClick={collectHero}
+            >
               <SearchIcon />
-            </Button>
-          </FormControl>
+            </IconButton>
         </Paper>
-      </div>
     )
   }
 }
