@@ -7,6 +7,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
+import HeroCard from './HeroCard.jsx';
 
 const styles = (theme) => ({
   root: {
@@ -28,6 +29,10 @@ const styles = (theme) => ({
   button: {
     marginTop: theme.spacing.unit * 3,
     padding: 10,
+  },
+  container: {
+    height: '40em',
+    width: '30em,'
   }
 });
 
@@ -51,28 +56,34 @@ class Battle extends Component {
   // ***** CHANGE ONSUBMIT Func *****
   render() {
     const { heroSearch } = this.state;
-    const { classes, fetchData, collectHero, battleSearch } = this.props;
+    const { classes, fetchData, collectHero,
+      battleSearch, battleList } = this.props;
     return (
+      <Paper id="battleContainerPaper" className={classes.container}>
         <Paper className={classes.root}>
-            <TextField
-              id="outlined-with-placeholder"
-              className={classes.textField}
-              name='battleSearch'
-              label="Find Heroes"
-              value={battleSearch}
-              placeholder="find a hero"
-              margin="normal"
-              variant="outlined"
-              onChange={fetchData}
+          <TextField className={classes.textField}
+            id="outlined-with-placeholder"
+            name='battleSearch'
+            label="Find Heroes"
+            value={battleSearch}
+            placeholder="find a hero"
+            margin="normal"
+            variant="outlined"
+            onChange={fetchData}
             />
-            <IconButton
-              className={classes.button}
-              type="submit"
-              onClick={collectHero}
+          <IconButton className={classes.button}
+            type="submit"
+            onClick={collectHero}
             >
-              <SearchIcon />
-            </IconButton>
+            <SearchIcon />
+          </IconButton>
         </Paper>
+          <div className={classes.container}>
+            {(battleList.length >= 1 ) ? battleList.map((hero, i) => {
+              return <HeroCard name={hero.name} img={hero.image.url} key={i} />
+            }) : null}
+          </div>
+      </Paper>
     )
   }
 }

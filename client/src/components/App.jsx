@@ -30,7 +30,6 @@ fetchData(e) {
   });
 }
 
-// add a method to send a get request with the correct params to server. Then, using a function, reassign the name to a heroId to do a correct lookup.
 collectHero(e) {
   e.preventDefault();
   const app = this;
@@ -90,7 +89,7 @@ componentDidMount() {
 }
 
   render() {
-    const { query, heroList, battleSearch } = this.state;
+    const { query, heroList, battleSearch, battleList } = this.state;
     return (
       <Router>
         <div>
@@ -121,6 +120,7 @@ componentDidMount() {
             path="/battle"
             render={() => (
             <Battle
+              battleList={battleList}
               battleSearch={battleSearch}
               collectHero={this.collectHero}
               fetchData={this.fetchData}
