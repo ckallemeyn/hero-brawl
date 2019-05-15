@@ -8,6 +8,7 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
 import HeroCard from './HeroCard.jsx';
+import Grid from '@material-ui/core/Grid'
 
 const styles = (theme) => ({
   root: {
@@ -31,6 +32,7 @@ const styles = (theme) => ({
     padding: 10,
   },
   container: {
+    flexGrow: 1,
     height: '40em',
     width: '30em,'
   }
@@ -78,11 +80,13 @@ class Battle extends Component {
             <SearchIcon />
           </IconButton>
         </Paper>
-          <div className={classes.container}>
-            {(battleList.length >= 1 ) ? battleList.map((hero, i) => {
-              return <HeroCard name={hero.name} img={hero.image.url} key={i} />
-            }) : null}
-          </div>
+        <Grid container justify="center" spacing={16} className={classes.container}>
+            {(battleList.length >= 1 ) ? battleList.map((hero, i) => (
+              <Grid key={i} item>
+                <HeroCard name={hero.name} img={hero.image.url} key={i} />
+              </Grid>
+            )) : null}
+        </Grid>
       </Paper>
     )
   }
