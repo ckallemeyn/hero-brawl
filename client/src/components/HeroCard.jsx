@@ -16,7 +16,7 @@ const styles = {
   },
   bigAvatar: {
     margin: 10,
-    marginLeft: '50%',
+    marginLeft: '41.5%',
     width: 60,
     height: 60,
   }

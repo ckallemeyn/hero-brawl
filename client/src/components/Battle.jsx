@@ -12,15 +12,15 @@ import Grid from '@material-ui/core/Grid'
 
 const styles = (theme) => ({
   root: {
-    margin: theme.spacing.unit,
-    marginLeft: theme.spacing.unit * 6,
+    marginTop: theme.spacing.unit * 3,
+    marginLeft: '34%',
     width: 400,
     alignItems: 'center',
     display: 'flex',
+    zIndex: 2,
   },
   input: {
     width: '20em',
-
   },
   textField: {
     marginLeft: theme.spacing.unit * 5,
@@ -35,7 +35,12 @@ const styles = (theme) => ({
     flexGrow: 1,
     height: '40em',
     width: '30em,'
+  },
+  background: {
+    MarginTop: theme.spacing.unit * 3,
+    height:'50em',
   }
+
 });
 
 class Battle extends Component {
@@ -61,8 +66,8 @@ class Battle extends Component {
     const { classes, fetchData, collectHero,
       battleSearch, battleList } = this.props;
     return (
-      <Paper id="battleContainerPaper" className={classes.container}>
-        <Paper className={classes.root}>
+      <Paper id="battleBackground" className={classes.background}>
+        <Paper elevate={4} className={classes.root}>
           <TextField className={classes.textField}
             id="outlined-with-placeholder"
             name='battleSearch'

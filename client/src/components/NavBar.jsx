@@ -98,7 +98,8 @@ function NavBar(props) {
               }}
             />
           </div>
-          <Button component={Link} to="/" color='inherit'> Login </Button>
+          <Button component={Link} to="/" color='inherit'> Signup </Button>
+          <Button component={Link} to="/signin" color='inherit'> Signin </Button>
           <Button component={Link} to="/lineup" color='inherit'> Your List </Button>
           <Button component={Link} to="/battle" color='inherit'> Battle! </Button>
         </Toolbar>

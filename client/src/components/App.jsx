@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import axios from 'axios';
 import HeroTable from './HeroTable.jsx';
 import NavBar from './NavBar.jsx';
-import LoginForm from './LoginForm.jsx';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import SignUpForm from './SignUpForm.jsx';
 import Battle from './Battle.jsx';
+import SignInForm from './SignInForm.jsx';
 
 class App extends Component {
   constructor(props) {
@@ -94,8 +95,7 @@ componentDidMount() {
       <Router>
         <div>
           <NavBar />
-          <br/>
-          {/* <LoginForm />
+          {/* <SignUpForm />
           <form onSubmit={this.grabHeroData}>
             <label>
               Username:
@@ -111,10 +111,13 @@ componentDidMount() {
           {/* <div>
             <HeroTable data={heroList} />
           </div> */}
-          <Route exact path="/" component={LoginForm} />
+          <Route exact path="/" component={SignUpForm} />
+          <Route exact path="/signin"
+            render={() => <SignInForm />}
+          />
           <Route
             path="/lineup"
-            render={() => <HeroTable  data={heroList}/>}
+            render={() => <HeroTable  data={heroList} />}
           />
           <Route
             path="/battle"
