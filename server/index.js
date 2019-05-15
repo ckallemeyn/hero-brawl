@@ -47,15 +47,17 @@ app.get('/hero/:username', (req, res) => {
 
 // Refactor Later to shorten code
 app.post('/hero', (req, res) => {
-  const { query, username } = req.body;
-  const heroId = nameToId(query);
+  const { heroName, username } = req.body;
+  const heroId = nameToId(heroName);
+  console.log('Found Hero ID on server', )
   getHeroes(heroId, function(error, response, body) {
     if (error) {
       console.error('error in getHeroes func in server', error);
       res.status(404).send(error);
     } else {
       let data = JSON.parse(body);
-      const [{ name, powerstats, image: { url } }] = data.results;
+      console.log('Here is the data', data)
+      const { name, powerstats, image: { url } } = data;
       const stats = Object.values(powerstats);
       const params = [ name, ...stats, url, username ];
       // This can be refactored in a database file and imported in:

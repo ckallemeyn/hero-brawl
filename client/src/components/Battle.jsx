@@ -28,7 +28,7 @@ const styles = (theme) => ({
     marginBottom: theme.spacing.unit,
   },
   button: {
-    marginTop: theme.spacing.unit * 3,
+    marginTop: theme.spacing.unit * 2,
     padding: 10,
   },
   container: {
@@ -40,7 +40,6 @@ const styles = (theme) => ({
     MarginTop: theme.spacing.unit * 3,
     height:'50em',
   }
-
 });
 
 class Battle extends Component {
@@ -55,12 +54,6 @@ class Battle extends Component {
     }
   }
 
-  // Func to get average PowerStat score from each hero
-
-  // Func to randomize that powerstat to make the fight more random and less predictable
-
-
-  // ***** CHANGE ONSUBMIT Func *****
   render() {
     const { heroSearch } = this.state;
     const { classes, fetchData, collectHero,

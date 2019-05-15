@@ -13,14 +13,14 @@ class App extends Component {
     this.state = {
       username: '',
       password: '',
-      query: '',
       battleSearch: '',
+      heroName: '',
       battleList:[],
       heroList: [],
       removeHero: false,
     }
     this.fetchData = this.fetchData.bind(this);
-    this.grabHeroData = this.grabHeroData.bind(this);
+    this.postHeroData = this.postHeroData.bind(this);
     this.collectHero = this.collectHero.bind(this);
     this.signInUser = this.signInUser.bind(this);
   }
@@ -38,12 +38,10 @@ collectHero(e) {
   const app = this;
   const { battleSearch, battleList } = this.state;
   if (battleSearch === '') {
-    alert('not a valid hero name please try again');
-    return;
+    return alert('not a valid hero name please try again');
   }
   if (battleList.length === 2) {
-    alert('Cannot add another hero to battle');
-    return;
+    return alert('Cannot add another hero to battle');
   }
   axios.get(`http://localhost:4000/stats/${battleSearch}`)
     .then((response) => {
@@ -77,16 +75,15 @@ signInUser() {
 }
 
 
-grabHeroData(e) {
+postHeroData(e) {
   e.preventDefault();
-  const { username, query, heroList } = this.state;
+  const { username, heroName } = this.state;
   let app = this;
   console.log('here is the username', username)
-  axios.post('http://localhost:4000/hero', { query, username })
+  axios.post('http://localhost:4000/hero', { heroName, username })
     .then((response) => {
       console.log('Retrieved hero data', response);
-
-      // need to do something with the username here...
+      app.signInUser();
     })
     .catch((error) => {
       console.error('unabale to post data', error);
@@ -115,22 +112,6 @@ componentDidMount() {
       <Router>
         <div>
           <NavBar />
-          {/* <SignUpForm />
-          <form onSubmit={this.grabHeroData}>
-            <label>
-              Username:
-              <input type="text" name="username" onChange={this.fetchData}/>
-            </label>
-            <br/>
-            <label>
-              Search:
-              <input type="text" name="query" placeholder="find a superhero" onChange={this.fetchData}/>
-            </label>
-            <input type="submit" value="submit"/>
-          </form> */}
-          {/* <div>
-            <HeroTable data={heroList} />
-          </div> */}
           <Route exact path="/" component={SignUpForm} />
           <Route path="/signin"
             render={() => (
@@ -141,7 +122,12 @@ componentDidMount() {
           />
           <Route
             path="/lineup"
-            render={() => <HeroTable  data={heroList} />}
+            render={() => (
+            <HeroTable
+              data={heroList}
+              fetchData={this.fetchData}
+              postHeroData={this.postHeroData}
+            />)}
           />
           <Route
             path="/battle"
