@@ -30,7 +30,8 @@ const styles = theme => ({
     marginLeft: '12px',
   },
   button: {
-    margin: theme.spacing.unit * 2
+    marginLeft: '15em',
+    margin: theme.spacing.unit * 3,
   }
 });
 
@@ -42,7 +43,7 @@ const theme = createMuiTheme({
 });
 
 function SignInForm(props) {
-  const { classes } = props;
+  const { classes, fetchData, signInUser } = props;
 
   return (
     <div className={classes.root}>
@@ -51,18 +52,22 @@ function SignInForm(props) {
         <MuiThemeProvider theme={theme}>
           <TextField
             className={classes.margin}
+            name="username"
             label="username"
-            id="username"
+            id="signInUsername"
             required={true}
+            onChange={fetchData}
           />
         </MuiThemeProvider>
         <MuiThemeProvider theme={theme}>
           <TextField
             className={classes.margin}
+            name="password"
             label="password"
-            id="password"
+            id="signInPassword"
             required={true}
             type="password"
+            onChange={fetchData}
           />
         </MuiThemeProvider>
       </FormControl>
@@ -71,7 +76,7 @@ function SignInForm(props) {
           variant="contained"
           type="submit"
           color="secondary"
-          onClick={null}> Submit </Button>
+          onClick={signInUser}> Submit </Button>
     </Paper>
     </div>
   );

@@ -12,6 +12,7 @@ class App extends Component {
     super(props);
     this.state = {
       username: '',
+      password: '',
       query: '',
       battleSearch: '',
       battleList:[],
@@ -21,6 +22,7 @@ class App extends Component {
     this.fetchData = this.fetchData.bind(this);
     this.grabHeroData = this.grabHeroData.bind(this);
     this.collectHero = this.collectHero.bind(this);
+    this.signInUser = this.signInUser.bind(this);
   }
 
 fetchData(e) {
@@ -56,6 +58,24 @@ collectHero(e) {
     });
 }
 
+signInUser() {
+  const { username, password } = this.state;
+  if (username.length < 2 || password.length < 2) {
+    return alert('username is too short, please try again.');
+  }
+  let app = this;
+  axios.get(`http://localhost:4000/hero/${username}`)
+    .then(({ data }) => {
+      console.log('SUCCESS received data on client', data);
+      app.setState({
+        heroList: data
+      });
+    })
+    .catch((error) => {
+      console.error('unable to read data from db onload', error);
+    });
+}
+
 
 grabHeroData(e) {
   e.preventDefault();
@@ -75,18 +95,18 @@ grabHeroData(e) {
 
 // initial get request with username
 componentDidMount() {
-  let username = 'ckallemeyn';
-  let app = this;
-  axios.get(`http://localhost:4000/hero/${username}`)
-    .then(({ data }) => {
-      console.log('SUCCESS received data on client', data);
-      app.setState({
-        heroList: data
-      });
-    })
-    .catch((error) => {
-      console.error('unable to read data from db onload', error);
-    });
+  // let username = 'ckallemeyn';
+  // let app = this;
+  // axios.get(`http://localhost:4000/hero/${username}`)
+  //   .then(({ data }) => {
+  //     console.log('SUCCESS received data on client', data);
+  //     app.setState({
+  //       heroList: data
+  //     });
+  //   })
+  //   .catch((error) => {
+  //     console.error('unable to read data from db onload', error);
+  //   });
 }
 
   render() {
@@ -112,8 +132,12 @@ componentDidMount() {
             <HeroTable data={heroList} />
           </div> */}
           <Route exact path="/" component={SignUpForm} />
-          <Route exact path="/signin"
-            render={() => <SignInForm />}
+          <Route path="/signin"
+            render={() => (
+            <SignInForm
+              fetchData={this.fetchData}
+              signInUser={this.signInUser}
+            />)}
           />
           <Route
             path="/lineup"

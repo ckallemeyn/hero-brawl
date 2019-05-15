@@ -34,7 +34,7 @@ app.get('/hero/:username', (req, res) => {
   const { username } = req.params;
   const qs =`SELECT name, intelligence, strength, speed, durability, power, combat, image FROM heroes, users WHERE username = ?`;
   db.query(qs, username, (error, results, fields) => {
-    if (error){
+    if (error) {
       console.error('Could not retrieve data from db', error);
       res.status(404).send(error);
     }

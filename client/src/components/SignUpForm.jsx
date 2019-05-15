@@ -10,6 +10,8 @@ import purple from '@material-ui/core/colors/purple';
 import green from '@material-ui/core/colors/green';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+
 
 const styles = theme => ({
   root: {
@@ -30,7 +32,8 @@ const styles = theme => ({
     marginLeft: '12px',
   },
   button: {
-    margin: theme.spacing.unit * 3
+    marginLeft: '15em',
+    margin: theme.spacing.unit * 3,
   }
 });
 
@@ -48,6 +51,9 @@ function SignUpForm(props) {
     <div className={classes.root}>
     <Paper className={classes.paper}>
       <FormControl className={classes.margin}>
+        <Typography variant="h4" gutterBottom>
+          Sign-Up
+        </Typography>
         <MuiThemeProvider theme={theme}>
           <TextField
             className={classes.margin}
@@ -68,7 +74,7 @@ function SignUpForm(props) {
           <TextField
             className={classes.margin}
             label="username"
-            id="username"
+            id="signUpUsername"
             required={true}
             />
         </MuiThemeProvider>
@@ -76,7 +82,7 @@ function SignUpForm(props) {
           <TextField
             className={classes.margin}
             label="password"
-            id="password"
+            id="signUpPassword"
             required={true}
             type="password"
             />
