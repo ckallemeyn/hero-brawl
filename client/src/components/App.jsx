@@ -23,6 +23,9 @@ class App extends Component {
     this.postHeroData = this.postHeroData.bind(this);
     this.collectHero = this.collectHero.bind(this);
     this.signInUser = this.signInUser.bind(this);
+    this.brawl = this.brawl.bind(this);
+    this.findStatAverage = this.findStatAverage.bind(this);
+    this.randomChamp = this.randomChamp.bind(this);
   }
 
 fetchData(e) {
@@ -90,20 +93,45 @@ postHeroData(e) {
     });
 }
 
-// initial get request with username
+brawl() {
+  let battleList = this.state.battleList;
+  let hero1, hero2, hero1Stats, hero2Stats ;
+  battleList.forEach((el, i) => {
+    if (i === 0) {
+      hero1 = el.name
+      hero1Stats = this.findStatAverage(el.powerstats)
+    } else {
+      hero2 = el.name
+      hero2Stats = this.findStatAverage(el.powerstats);
+    }
+  });
+  let victor = this.randomChamp(hero1Stats, hero2Stats);
+  return (victor === 'p1') ? alert(`${hero1} WINS!`) : alert(`${hero2} WINS!`);
+}
+
+findStatAverage(obj) {
+  let average = Object.values(obj).reduce((acc, cur) => {
+    if (cur === null) {
+      cur = 0;
+    }
+    return acc + parseInt(cur, 10);
+  }, 0);
+  return average / 6;
+}
+
+randomChamp(p1, p2) {
+  let min = Math.ceil(1);
+  p1 = Math.floor(p1);
+  p2 = Math.floor(p2);
+  let p1Num = Math.floor(Math.random() * (p1 - min + 1)) + min;
+  let p2Num = Math.floor(Math.random() * (p2 - min + 1)) + min;
+  console.log('here is p1Num: ', p1Num)
+  console.log('here is p2Num: ', p2Num)
+  return (p1Num >= p2Num) ? 'p1' : 'p2';
+}
+
 componentDidMount() {
-  // let username = 'ckallemeyn';
-  // let app = this;
-  // axios.get(`http://localhost:4000/hero/${username}`)
-  //   .then(({ data }) => {
-  //     console.log('SUCCESS received data on client', data);
-  //     app.setState({
-  //       heroList: data
-  //     });
-  //   })
-  //   .catch((error) => {
-  //     console.error('unable to read data from db onload', error);
-  //   });
+
 }
 
   render() {
@@ -135,6 +163,7 @@ componentDidMount() {
             <Battle
               battleList={battleList}
               battleSearch={battleSearch}
+              brawl={this.brawl}
               collectHero={this.collectHero}
               fetchData={this.fetchData}
             />)}

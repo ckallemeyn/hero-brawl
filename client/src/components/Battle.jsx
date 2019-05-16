@@ -29,7 +29,11 @@ const styles = (theme) => ({
   },
   button: {
     marginTop: theme.spacing.unit * 2,
-    padding: 10,
+    marginLeft: theme.spacing.unit,
+  },
+  icon: {
+    marginTop: theme.spacing.unit * 2,
+    padding: 15,
   },
   container: {
     flexGrow: 1,
@@ -47,8 +51,6 @@ class Battle extends Component {
     super(props)
 
     this.state = {
-      stats: [],
-      heroSearch: '',
       Hero1: '',
       Hero2: ''
     }
@@ -57,7 +59,7 @@ class Battle extends Component {
   render() {
     const { heroSearch } = this.state;
     const { classes, fetchData, collectHero,
-      battleSearch, battleList } = this.props;
+      battleSearch, battleList, brawl } = this.props;
     return (
       <Paper id="battleBackground" className={classes.background}>
         <Paper elevate={4} className={classes.root}>
@@ -71,12 +73,16 @@ class Battle extends Component {
             variant="outlined"
             onChange={fetchData}
             />
-          <IconButton className={classes.button}
+          <IconButton className={classes.icon}
             type="submit"
             onClick={collectHero}
             >
             <SearchIcon />
           </IconButton>
+          {(battleList.length === 2) ?
+            <Button className={classes.button} variant="contained" color="secondary" onClick={brawl} >
+              Brawl!
+            </Button> : null}
         </Paper>
         <Grid container justify="center" spacing={16} className={classes.container}>
             {(battleList.length >= 1 ) ? battleList.map((hero, i) => (
@@ -85,6 +91,7 @@ class Battle extends Component {
               </Grid>
             )) : null}
         </Grid>
+
       </Paper>
     )
   }
